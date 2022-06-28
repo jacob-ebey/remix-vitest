@@ -1,9 +1,8 @@
-import type { MockedFunction } from "vitest";
-import type { render as testRenderFunction } from "@testing-library/react";
+import * as RTL from "@testing-library/react";
+import * as Mocks from "~/mocks";
 
-import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import * as RemixServer from "@remix-run/node";
+import * as RemixReact from "@remix-run/react";
 
 let DEFAULT_MESSAGE = "Hello, World!";
 
@@ -11,7 +10,7 @@ type LoaderData = {
   message: string;
 };
 
-export let loader: LoaderFunction = ({ request }) => {
+export let loader: RemixServer.LoaderFunction = ({ request }) => {
   let url = new URL(request.url);
   let name = url.searchParams.get("name")?.trim();
   let message = DEFAULT_MESSAGE;
@@ -19,42 +18,46 @@ export let loader: LoaderFunction = ({ request }) => {
     message = `Hello, ${name}!`;
   }
 
-  return json<LoaderData>({
+  return RemixServer.json<LoaderData>({
     message,
   });
 };
 
 export default function Index() {
-  let { message } = useLoaderData<LoaderData>();
+  let { message } = RemixReact.useLoaderData<LoaderData>();
   return (
     <main>
       <h1>{message}</h1>
+      <p>
+        <RemixReact.Link to="about">Go to the about page.</RemixReact.Link>
+      </p>
     </main>
   );
 }
 
 if (process.env.NODE_ENV === "test" && import.meta.vitest) {
-  let { beforeAll, describe, test, expect, vi } = import.meta.vitest;
+  let { describe, test, expect, vi } = import.meta.vitest;
 
-  let render: typeof testRenderFunction;
-
-  beforeAll(async () => {
-    let testingLibrary = await import("@testing-library/react");
-    render = testingLibrary.render;
-  });
-
-  vi.mock("@remix-run/react", () => ({
-    useLoaderData: vi.fn(),
-  }));
-
-  let mockedUseLoaderData = useLoaderData as MockedFunction<
-    typeof useLoaderData
+  vi.mock("@remix-run/react", () => Mocks.createRemixReactMock({ path: "/" }));
+  let MockRemixReact = RemixReact as unknown as ReturnType<
+    typeof Mocks.createRemixReactMock
   >;
+
   describe("component", () => {
     test("renders message", () => {
-      mockedUseLoaderData.mockReturnValueOnce({ message: DEFAULT_MESSAGE });
-      let { getByText } = render(<Index />);
+      MockRemixReact.useLoaderData.mockReturnValueOnce({
+        message: DEFAULT_MESSAGE,
+      });
+      let { getByText } = RTL.render(<Index />);
       expect(getByText(DEFAULT_MESSAGE)).toBeDefined();
+    });
+
+    test("renders link to about", () => {
+      MockRemixReact.useLoaderData.mockReturnValueOnce({
+        message: DEFAULT_MESSAGE,
+      });
+      let { getByRole } = RTL.render(<Index />);
+      expect(getByRole("link").getAttribute("href")).toBe("/about");
     });
   });
 
