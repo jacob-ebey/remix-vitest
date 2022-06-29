@@ -37,6 +37,27 @@ if (process.env.NODE_ENV === "test" && import.meta.vitest) {
     })
   );
 
+  describe("meta", () => {
+    test("contains charset, title, and viewport", () => {
+      let data = meta({
+        data: {},
+        location: {
+          hash: "",
+          pathname: "/",
+          key: "",
+          search: "",
+          state: undefined,
+        },
+        params: {},
+        parentsData: {},
+      });
+
+      expect(data.charset).toBeTypeOf("string");
+      expect(data.title).toBeTypeOf("string");
+      expect(data.viewport).toBeTypeOf("string");
+    });
+  });
+
   describe("component", () => {
     test("renders outlet in body", () => {
       let render = RTL.render(<Root />);
