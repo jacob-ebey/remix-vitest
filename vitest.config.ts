@@ -9,6 +9,7 @@ export default VitestConfig.defineConfig({
     environment: "jsdom",
     globals: true,
     includeSource: ["app/**/*.{ts,tsx}"],
+    exclude: ["node_modules", "e2e"],
     coverage: {
       exclude: ["app/mocks.tsx"],
       reporter: process.env.CI ? "json" : "html-spa",

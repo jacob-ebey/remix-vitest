@@ -8,6 +8,30 @@ type CreateRemixReactMockOptions = {
 };
 
 export function createRemixReactMock(options: CreateRemixReactMockOptions) {
+  let MockedForm = vi.fn(
+    ({
+      action,
+      reloadDocument,
+      replace,
+      children,
+      ...rest
+    }: React.ComponentProps<typeof RemixReact.Form>) => {
+      let href = ReactRouter.createPath(
+        ReactRouter.resolvePath(action || ".", options.path)
+      );
+      return (
+        <form
+          {...rest}
+          action={href}
+          test-reloaddocument={reloadDocument ? "true" : undefined}
+          test-replace={replace ? "true" : undefined}
+        >
+          {children}
+        </form>
+      );
+    }
+  );
+
   let MockedLink = vi.fn(
     ({
       to,
@@ -38,6 +62,8 @@ export function createRemixReactMock(options: CreateRemixReactMockOptions) {
 
   return {
     useLoaderData: vi.fn(),
+    useSearchParams: vi.fn(),
+    Form: MockedForm,
     Link: MockedLink,
     Links: vi.fn(() => <link data-testid="remix-meta" />),
     LiveReload: vi.fn(() => <script data-testid="remix-live-reload" />),

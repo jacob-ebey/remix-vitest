@@ -25,9 +25,20 @@ export let loader: RemixServer.LoaderFunction = ({ request }) => {
 
 export default function Index() {
   let { message } = RemixReact.useLoaderData<LoaderData>();
+  let [searchParams] = RemixReact.useSearchParams();
+  let defaultName = searchParams.get("name")?.trim() || undefined;
   return (
     <main>
       <h1>{message}</h1>
+      <RemixReact.Form>
+        <input
+          key={defaultName}
+          name="name"
+          placeholder="enter a name"
+          defaultValue={defaultName}
+        />
+        <button type="submit">Submit</button>
+      </RemixReact.Form>
       <p>
         <RemixReact.Link to="about">Go to the about page.</RemixReact.Link>
       </p>
@@ -39,25 +50,38 @@ if (process.env.NODE_ENV === "test" && import.meta.vitest) {
   let { describe, test, expect, vi } = import.meta.vitest;
 
   vi.mock("@remix-run/react", () => Mocks.createRemixReactMock({ path: "/" }));
-  let MockRemixReact = RemixReact as unknown as ReturnType<
+  let RemixReactMock = RemixReact as unknown as ReturnType<
     typeof Mocks.createRemixReactMock
   >;
 
   describe("component", () => {
-    test("renders message", () => {
-      MockRemixReact.useLoaderData.mockReturnValueOnce({
+    beforeEach(() => {
+      RemixReactMock.useLoaderData.mockReturnValue({
         message: DEFAULT_MESSAGE,
       });
+      RemixReactMock.useSearchParams.mockReturnValue([new URLSearchParams()]);
+    });
+
+    test("renders message", () => {
       let { getByText } = RTL.render(<Index />);
       expect(getByText(DEFAULT_MESSAGE)).toBeDefined();
     });
 
     test("renders link to about", () => {
-      MockRemixReact.useLoaderData.mockReturnValueOnce({
-        message: DEFAULT_MESSAGE,
-      });
       let { getByRole } = RTL.render(<Index />);
       expect(getByRole("link").getAttribute("href")).toBe("/about");
+    });
+
+    test("defaults to name in search params", () => {
+      RemixReactMock.useSearchParams.mockReturnValue([
+        new URLSearchParams({
+          name: "John",
+        }),
+      ]);
+      let { getByPlaceholderText } = RTL.render(<Index />);
+      expect(getByPlaceholderText("enter a name").getAttribute("value")).toBe(
+        "John"
+      );
     });
   });
 
