@@ -11,6 +11,7 @@ export default VitestConfig.defineConfig({
     includeSource: ["app/**/*.{ts,tsx}"],
     coverage: {
       exclude: ["app/mocks.tsx"],
+      reporter: process.env.CI ? "json" : "html-spa",
     },
   },
   resolve: {
