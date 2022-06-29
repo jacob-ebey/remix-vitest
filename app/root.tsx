@@ -4,7 +4,7 @@ import * as Mocks from "~/mocks";
 import type * as RemixNode from "@remix-run/node";
 import * as RemixReact from "@remix-run/react";
 
-export const meta: RemixNode.MetaFunction = () => ({
+export let meta: RemixNode.MetaFunction = () => ({
   charset: "utf-8",
   title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
