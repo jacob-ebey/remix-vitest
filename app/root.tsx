@@ -4,6 +4,8 @@ import * as Mocks from "~/mocks";
 import type * as RemixNode from "@remix-run/node";
 import * as RemixReact from "@remix-run/react";
 
+import picoStylesHref from "~/styles/pico.css";
+
 export let meta: RemixNode.MetaFunction = () => ({
   charset: "utf-8",
   title: "New Remix App",
@@ -15,6 +17,7 @@ export default function Root() {
     <html lang="en">
       <head>
         <RemixReact.Meta />
+        <link rel="stylesheet" href={picoStylesHref} />
         <RemixReact.Links />
       </head>
       <body>

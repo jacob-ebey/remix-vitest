@@ -30,7 +30,7 @@ export default function Index() {
   return (
     <main>
       <h1>{message}</h1>
-      <RemixReact.Form>
+      <RemixReact.Form action="/">
         <input
           key={defaultName}
           name="name"
