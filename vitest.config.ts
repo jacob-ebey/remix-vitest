@@ -9,6 +9,9 @@ export default VitestConfig.defineConfig({
     environment: "jsdom",
     globals: true,
     includeSource: ["app/**/*.{ts,tsx}"],
+    coverage: {
+      exclude: ["app/mocks.tsx"],
+    },
   },
   resolve: {
     alias: {
