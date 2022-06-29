@@ -1,10 +1,11 @@
 name: Testing Deployment
 
 on:
-  repository_dispatch:
-    types: [DEPLOY]
+  pull_request_comment:
+    types: [created, edited]
 
 jobs:
+  if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, "This PR is being deployed to") }}
   integration-tests:
     runs-on: ubuntu-latest
 
