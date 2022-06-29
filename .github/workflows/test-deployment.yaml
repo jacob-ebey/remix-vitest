@@ -5,8 +5,8 @@ on:
     types: [created, edited]
 
 jobs:
-  if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'This PR is being deployed to') }}
   integration-tests:
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'This PR is being deployed to') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -39,27 +39,3 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
-
-  unit-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18.x"
-
-      - name: Install Dependencies
-        uses: bahmutov/npm-install@v1
-
-      - name: Run Unit Tests
-        run: npm run test:unit
-
-      - name: Publish Coverage
-        if: always()
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
