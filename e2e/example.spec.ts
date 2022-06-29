@@ -24,8 +24,4 @@ test.describe("example", () => {
       await page.locator("h1", { hasText: "About Page" })
     ).toBeVisible();
   });
-
-  test("fails", () => {
-    expect(true).toBe(false);
-  });
 });

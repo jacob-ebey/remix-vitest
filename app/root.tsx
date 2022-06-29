@@ -37,10 +37,6 @@ if (process.env.NODE_ENV === "test" && import.meta.vitest) {
     })
   );
 
-  test("fails", () => {
-    expect(true).toBe(false);
-  });
-
   describe("meta", () => {
     test("contains charset, title, and viewport", () => {
       let data = meta({
