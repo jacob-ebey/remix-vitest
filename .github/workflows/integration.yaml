@@ -8,20 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check Pull Request comments
-        uses: actions/CheckPRComments@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Required to to act on pull request through GitHub API
-        with:
-          comments-must-contain: "This PR is being deployed to [Railway](https://railway.app) 🚅"
-
-      - name: Check Pull Request comments
-        uses: actions/CheckPRComments@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Required to to act on pull request through GitHub API
-        with:
-          comments-must-contain: "[✅ Success]"
-
       - name: Checkout
         uses: actions/checkout@v3
 
