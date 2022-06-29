@@ -1,4 +1,6 @@
-# Welcome to Remix!
+# Remix + Vitest
+
+[![codecov](https://codecov.io/gh/jacob-ebey/remix-vitest/branch/main/graph/badge.svg?token=BRD8HRYTUY)](https://codecov.io/gh/jacob-ebey/remix-vitest)
 
 - [Remix Docs](https://remix.run/docs)
 
