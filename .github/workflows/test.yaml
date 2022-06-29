@@ -1,6 +1,6 @@
 name: Testing CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -14,15 +14,8 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: Dependencies Cache
-        uses: actions/cache@v3
-        with:
-          path: "**/.npm"
-          key: 18.x-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
       - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm set cache .npm && npm ci  --prefer-offline --no-audit
+        uses: bahmutov/npm-install@v1
 
       - name: Run Tests
         run: npm run coverage
