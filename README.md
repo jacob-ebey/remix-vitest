@@ -2,6 +2,8 @@
 
 [![codecov](https://codecov.io/gh/jacob-ebey/remix-vitest/branch/main/graph/badge.svg?token=BRD8HRYTUY)](https://codecov.io/gh/jacob-ebey/remix-vitest)
 
+![A sunburst graph representing test coverage.](https://codecov.io/gh/jacob-ebey/remix-vitest/branch/main/graphs/sunburst.svg?token=BRD8HRYTUY)
+
 - [Remix Docs](https://remix.run/docs)
 
 ## Development
