@@ -26,7 +26,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npm run test:integration
+        run: npx playwright test
 
   unit-tests:
     runs-on: ubuntu-latest
