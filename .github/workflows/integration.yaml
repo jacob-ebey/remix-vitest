@@ -1,4 +1,4 @@
-name: Testing Deployment
+name: Deployment Integration Tests
 
 on:
   issue_comment:
