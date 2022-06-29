@@ -1,8 +1,6 @@
 name: Deployment Integration Tests
 
-on:
-  issue_comment:
-    types: [created, edited, deleted]
+on: issue_comment
 
 jobs:
   integration-tests:
