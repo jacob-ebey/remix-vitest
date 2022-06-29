@@ -6,7 +6,7 @@ on:
 
 jobs:
   integration-tests:
-    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'This PR is being deployed to [Railway](https://railway.app) 🚅') && contains(github.event.comment.body, '[✅ Success](https://railway.app/project/')
+    if: "contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '🤖 run integration')"
     runs-on: ubuntu-latest
 
     steps:
