@@ -6,7 +6,7 @@ on:
 
 jobs:
   integration-tests:
-    if: "contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '🤖 run integration')"
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '🤖 run integration')
     runs-on: ubuntu-latest
 
     steps:
