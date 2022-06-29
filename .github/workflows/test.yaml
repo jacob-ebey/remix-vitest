@@ -12,5 +12,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
-      - run: npm ci
-      - run: npm run coverage
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: npm run coverage
+      - name: Publish Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
