@@ -1,10 +1,15 @@
 name: Deployment Integration Tests
 
-on: issue_comment
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      baseUrl:
+        description: "Base URL of the deployment to test against"
+        required: true
 
 jobs:
   integration-tests:
-    if: github.event.pull_request && contains(github.event.comment.body, '🤖 run integration')
     runs-on: ubuntu-latest
 
     steps:
@@ -37,3 +42,5 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
+        env:
+          URL: ${{ github.event.inputs.baseUrl }}
