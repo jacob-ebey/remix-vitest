@@ -61,7 +61,6 @@ jobs:
 
       - name: Publish Coverage
         if: always()
-        needs: [Run Unit Tests]
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
