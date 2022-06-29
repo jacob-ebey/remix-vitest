@@ -7,13 +7,13 @@ on:
   pull_request:
 
 jobs:
-  test:
+  integration-tests:
     runs-on: ubuntu-latest
-
     steps:
+      - name: Checkout
       - uses: actions/checkout@v3
 
-      - name: Use Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
@@ -21,8 +21,29 @@ jobs:
       - name: Install Dependencies
         uses: bahmutov/npm-install@v1
 
-      - name: Run Tests
-        run: npm run coverage
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npm run test:integration
+
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Run Unit Tests
+        run: npm run test:unit
 
       - name: Publish Coverage
         uses: codecov/codecov-action@v3
