@@ -13,6 +13,7 @@ type LoaderData = {
 export let loader: RemixServer.LoaderFunction = ({ request }) => {
   let url = new URL(request.url);
   let name = url.searchParams.get("name")?.trim();
+
   let message = DEFAULT_MESSAGE;
   if (name) {
     message = `Hello, ${name}!`;
@@ -27,6 +28,7 @@ export default function Index() {
   let { message } = RemixReact.useLoaderData<LoaderData>();
   let [searchParams] = RemixReact.useSearchParams();
   let defaultName = searchParams.get("name")?.trim() || undefined;
+
   return (
     <main>
       <h1>{message}</h1>
