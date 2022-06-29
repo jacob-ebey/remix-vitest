@@ -1,0 +1,14 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "tsconfig.json": "tsconfig.*.json, tsconfig.tsbuildinfo",
+    "package.json": ".eslintrc, .gitignore, .prettierignore, package-lock.json, playwright.config.ts, remix.env.d.ts, remix.config.js, tsconfig.json, vitest.config.ts"
+  },
+  "files.exclude": {
+    "**/.cache": true,
+    "**/build": true,
+    "**/coverage": true,
+    "**/node_modules": true
+  },
+  "search.useGlobalIgnoreFiles": true
+}
