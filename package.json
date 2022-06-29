@@ -1,4 +1,5 @@
 {
+  "name": "remix-vitest",
   "private": true,
   "sideEffects": false,
   "scripts": {
